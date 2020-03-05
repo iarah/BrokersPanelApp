@@ -13,7 +13,15 @@ export const ADD_BROKER = gql`
 export const ADD_PROPERTY = gql`
   mutation createProperty($myVar: PropertyInput!) {
     createProperty(propertyInput: $myVar) {
+      id
       address
+      latitude
+      longitude
+      price
+      currency
+      broker {
+        name
+      }
     }
   }
 `;

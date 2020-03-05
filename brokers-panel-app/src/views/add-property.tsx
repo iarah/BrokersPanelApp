@@ -60,16 +60,26 @@ export const AddProperty: React.FC = () => {
                 }
               },
               //update recibe cache y {data:{ createProperty: {address}}}
+              // createProperty es el nombre de la mutation en el schema
+              //    The first is an instance of a DataProxy object which has some methods
+              //     which will allow you to interact with the data in your store.
+              //    The second is the response from your mutation - either the optimistic response,
+              //    or the actual response returned by your server(see the mutation result
+              //    described in the mutation render prop section for more details).
               update: (cache, myObj) => {
-                //Q?: porque no lo puedo nombrar con algo distinto a 'data'
-                const data: any = cache.readQuery({
-                  query: GET_PROPERTIES
-                });
-                data.properties = [
-                  ...data.properties,
-                  myObj.data.createProperty
-                ];
-                cache.writeQuery({ query: GET_PROPERTIES, data });
+                try {
+                  //Q?: porque no lo puedo nombrar con algo distinto a 'data'
+                  const data: any = cache.readQuery({
+                    query: GET_PROPERTIES
+                  });
+                  data.properties = [
+                    ...data.properties,
+                    myObj.data.createProperty
+                  ];
+                  cache.writeQuery({ query: GET_PROPERTIES, data });
+                } catch (error) {
+                  console.error(error);
+                }
               }
             });
           }

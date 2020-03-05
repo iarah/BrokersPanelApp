@@ -39,15 +39,24 @@ export const AddBroker: React.FC = props => {
             },
 
             // update () recibe la cache y el objeto {createBroker:{id, name, address...}}
-            //createBroker = nombre de la mutation (schema)
+            //createBroker = nombre de la mutation (en el schema)
+            //    The first is an instance of a DataProxy object which has some methods
+            //     which will allow you to interact with the data in your store.
+            //    The second is the response from your mutation - either the optimistic response,
+            //    or the actual response returned by your server(see the mutation result
+            //    described in the mutation render prop section for more details).
             update: (cache, { data: createBroker }) => {
-              //Q?: porque tiene que ser 'data'? Con otro nombre no anda
-              const data: any = cache.readQuery({
-                query: GET_BROKERS
-              });
-              // cache.readQuery() --> { brokers: [{id, name, address}, {}, .. {}] }
-              data.brokers = [...data.brokers, createBroker];
-              cache.writeQuery({ query: GET_BROKERS, data: data });
+              try {
+                //Q?: porque tiene que ser 'data'? Con otro nombre no anda
+                const data: any = cache.readQuery({
+                  query: GET_BROKERS
+                });
+                // cache.readQuery() --> { brokers: [{id, name, address}, {}, .. {}] }
+                data.brokers = [...data.brokers, createBroker];
+                cache.writeQuery({ query: GET_BROKERS, data: data });
+              } catch (error) {
+                console.error(error);
+              }
             }
           });
         }}
