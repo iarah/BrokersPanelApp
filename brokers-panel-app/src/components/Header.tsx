@@ -1,25 +1,59 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+
+import { Box, Heading, Flex } from "@oneloop/jopijs";
+
+import { Tabs } from "@oneloop/jopijs";
 
 const Header: React.FC = () => {
-   return (
-        <div>
-          <div >Props & Brokers Panel</div>
+  return (
+    <Flex sx={{ flexDirection: "column" }}>
+      <Heading
+        as="h1"
+        variant="heading.0"
+        sx={{
+          p: "30px 0 30px 0",
+          alignSelf: "center"
+        }}
+      >
+        Props & Brokers Panel
+      </Heading>
+      <Tabs bg="primary" color="neutral.0" sx={{ justifyContent: "center" }}>
+        <Tabs.Tab id="properties">
           <Link to="/properties_list">
-            All Properties     
+            <Box as="a" href="#">
+              All Properties{" "}
+            </Box>
           </Link>
-          <Link to="/brokers_list" >
-            All Brokers
+        </Tabs.Tab>
+        <Tabs.Tab id="brokers">
+          <Link to="/brokers_list">
+            <Box as="a" href="#">
+              {" "}
+              All Brokers{" "}
+            </Box>
           </Link>
-          <Link to="/add_broker" >
-            Add Broker
+        </Tabs.Tab>
+        <Tabs.Tab id="add-broker">
+          <Link to="/add_broker">
+            <Box as="a" href="#">
+              {" "}
+              Add Broker{" "}
+            </Box>
           </Link>
-          <Link to="/add_property" >
-            Add Property
+        </Tabs.Tab>
+        <Tabs.Tab id="add-prop">
+          <Link to="/add_property">
+            <Box as="a" href="#">
+              {" "}
+              Add Property{" "}
+            </Box>
           </Link>
-        </div>
-    )
-  }
+        </Tabs.Tab>
+      </Tabs>
+    </Flex>
+  );
+};
 
-export default withRouter(Header)
+export default withRouter(Header);

@@ -1,36 +1,37 @@
-import React from 'react';
-import {Title} from './components/Title';
-import {PropertiesList} from './components/properties-list';
-import { BrokersList } from './components/brokers-list';
-import { Switch, Route } from 'react-router-dom'
-import Header from './components/Header';
-import {AddBroker} from './components/add-broker';
-import {AddProperty} from './components/add-property';
-import './App.css';
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+
+import { Box } from "@oneloop/jopijs";
+
+import Header from "./components/Header";
+import { PropertiesList } from "./views/properties-list";
+import { BrokersList } from "./views/brokers-list";
+import { AddBroker } from "./views/add-broker";
+import { AddProperty } from "./views/add-property";
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      <Title></Title>
+    <Box
+      className="App"
+      sx={{
+        marginLeft: "auto",
+        marginRight: "auto",
+        textAlign: "left"
+      }}
+    >
+      <Header />
       <Switch>
-        <Route exact 
-                path="/properties_list"
-                component={PropertiesList}/>
+        <Route exact path="/properties_list" component={PropertiesList} />
 
-        <Route exact 
-                path="/brokers_list"
-                component={BrokersList}/>
+        <Route exact path="/brokers_list" component={BrokersList} />
 
-        <Route exact 
-                path="/add_broker"
-                component={AddBroker}/>
+        <Route exact path="/add_broker" component={AddBroker} />
 
-        <Route exact 
-                path="/add_property"
-                component={AddProperty}/>
+        <Route exact path="/add_property" component={AddProperty} />
+
+        <Redirect exact from="/" to="brokers_list" />
       </Switch>
-    </div>
+    </Box>
   );
 }
 
