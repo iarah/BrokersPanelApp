@@ -25,3 +25,16 @@ export const ADD_PROPERTY = gql`
     }
   }
 `;
+
+export const UPDATE_PROPERTY = gql`
+  mutation editarPropiedad($nuevosCampos: PropertyEdit!) {
+    modifyProperty(propertyFields: $nuevosCampos) {
+      id
+      address
+      latitude
+      longitude
+      price
+      currency
+    }
+  }
+`;
