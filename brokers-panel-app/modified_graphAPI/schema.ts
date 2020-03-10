@@ -15,6 +15,12 @@ const typeDefs = gql`
     address: String
   }
 
+  input BrokerEdit {
+    id: Int!
+    name: String
+    address: String
+  }
+
   type Property {
     id: Int!
     broker: Broker!
@@ -54,6 +60,7 @@ const typeDefs = gql`
     createProperty(propertyInput: PropertyInput!): Property
     modifyProperty(propertyFields: PropertyEdit!): Property
     deleteProperty(propertyID: Int!): [Property]
+    editBroker(brokerFields: BrokerEdit!): Broker
   }
 `;
 
@@ -103,6 +110,22 @@ const resolvers = {
     deleteProperty: (parent, { propertyID }) => {
       RealEstateStore.deleteProperty(propertyID);
       return RealEstateStore.properties;
+    },
+    editBroker: (parent, { brokerFields }) => {
+      const existingBroker = RealEstateStore.brokers.find(
+        broker => broker.id === brokerFields.id
+      );
+      if (!existingBroker) {
+        throw new UserInputError("Invalid Broker ID, does not exists", {
+          invalidArgs: { brokerFields }
+        });
+      } else {
+        if (!brokerFields.name && !brokerFields.address) {
+          return existingBroker;
+        }
+
+        return RealEstateStore.replaceBroker(brokerFields);
+      }
     }
   }
 };

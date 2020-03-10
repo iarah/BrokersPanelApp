@@ -115,6 +115,21 @@ class Store {
       return prop;
     });
   }
+
+  replaceBroker(newBroker: Broker): void {
+    let resBroker;
+    this._brokers = this._brokers.map(broker => {
+      if (broker.id === newBroker.id) {
+        resBroker = {
+          ...broker,
+          ...newBroker
+        };
+        return resBroker;
+      }
+      return broker;
+    });
+    return resBroker;
+  }
 }
 
 export const RealEstateStore = Store.getInstance();

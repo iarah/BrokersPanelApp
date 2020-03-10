@@ -54,3 +54,13 @@ export const UPDATE_PROPERTY = gql`
     }
   }
 `;
+
+export const EDIT_BROKER = gql`
+  mutation editarBroker($input: BrokerEdit!) {
+    editBroker(brokerFields: $input) {
+      id
+      name
+      address
+    }
+  }
+`;
