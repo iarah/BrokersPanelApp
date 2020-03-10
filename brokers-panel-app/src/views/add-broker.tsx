@@ -97,6 +97,7 @@ export const AddBroker: React.FC = props => {
               ) : (
                 <Text> Nuevo Broker creado</Text>
               )} */}
+              <Text> Nuevo Broker creado</Text>
               <Button
                 variant="default"
                 size="small"
@@ -119,6 +120,7 @@ export const AddBroker: React.FC = props => {
               >
                 Ir a la lista de brokers
               </Button>
+              {/* //TODO: Limpiar los inputs */}
             </Modal.Footer>
           </Modal>
         )}

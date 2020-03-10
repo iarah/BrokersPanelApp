@@ -6,18 +6,14 @@ import { Table, Box, Button, Modal, Text, Input } from "@oneloop/jopijs";
 import { useToggle } from "@oneloop/hooks";
 
 import { GET_PROPERTIES } from "../graphql/queries";
-import { UPDATE_PROPERTY } from "../graphql/mutations";
+import { DELETE_PROPERTY } from "../graphql/mutations";
 
 export const PropertiesList: React.FC = () => {
   const { data } = useQuery(GET_PROPERTIES);
+  const [deleteProp] = useMutation(DELETE_PROPERTY);
+
   const [modalOpen, toggleModal] = useToggle(false);
   const [selectedProp, setSelectedProp] = useState();
-
-  const [address, setAddress] = useState();
-
-  const [updateProp, { loading, error, data: mutationResult }] = useMutation(
-    UPDATE_PROPERTY
-  );
 
   return (
     <Box sx={{ paddingTop: "20px", marginLeft: "40%" }}>
@@ -46,8 +42,7 @@ export const PropertiesList: React.FC = () => {
                     toggleModal();
                   }}
                 >
-                  {" "}
-                  Editar{" "}
+                  Eliminar
                 </Button>
               </Table.RowItem>
             </Table.Row>
@@ -58,7 +53,7 @@ export const PropertiesList: React.FC = () => {
       {modalOpen && (
         <Modal>
           <Modal.Header>
-            <Text>EDITAR PROPIEDAD #{selectedProp.id}</Text>
+            <Text>Borrar la propiedad "{selectedProp.address}"?</Text>
             <Button
               variant="default"
               size="small"
@@ -69,42 +64,35 @@ export const PropertiesList: React.FC = () => {
             </Button>
           </Modal.Header>
 
-          <Modal.Body>
-            Direccion:
-            <Input
-              sx={{
-                border: "solid black 1px"
-              }}
-              placeholder={selectedProp.address}
-            />
-            Precio:{" "}
-            <Input
-              sx={{
-                border: "solid black 1px"
-              }}
-              placeholder={selectedProp.price}
-            />
-          </Modal.Body>
-
           <Modal.Footer>
             <Button width={1 / 3} variant="secondary" onClick={toggleModal}>
               Cancelar
             </Button>
+
             <Button
               width={1 / 3}
               onClick={() => {
-                updateProp({
+                console.log(selectedProp.id);
+                deleteProp({
                   variables: {
-                    nuevosCampos: {
-                      address: "123 LALALA"
+                    propId: selectedProp.id
+                  },
+                  update: (cache, { data: { deleteProperty } }) => {
+                    try {
+                      const data: any = cache.readQuery({
+                        query: GET_PROPERTIES
+                      });
+                      data.properties = deleteProperty;
+                      cache.writeQuery({ query: GET_PROPERTIES, data: data });
+                    } catch (error) {
+                      console.error(error);
+                      return "errorrrr";
                     }
                   }
                 });
-                toggleModal();
               }}
             >
-              {/* aplicar cambios */}
-              Aplicar cambios
+              SÍ
             </Button>
           </Modal.Footer>
         </Modal>
@@ -125,6 +113,10 @@ En App importar con {}
   );
 };
 
+
+
+
+
 export default graphql(GET_PROPERTIES)(PropertiesList);
 
 En App importar sin {}
@@ -144,3 +136,38 @@ En App importar sin {}
   }).then(result => {//properties.push(result);
   Array(result.data.properties).map(res => console.log(res.address));});
   */
+
+{
+  /* <Modal.Body>
+            Direccion:
+            <Input
+              sx={{
+                border: "solid black 1px"
+              }}
+              placeholder={selectedProp.address}
+            />
+            Precio:{" "}
+            <Input
+              sx={{
+                border: "solid black 1px"
+              }}
+              placeholder={selectedProp.price}
+            />
+          </Modal.Body> */
+}
+
+{
+  /* <Button
+              width={1 / 3}
+              onClick={() => {
+                updateProp({
+                  variables: {
+                    nuevosCampos: {
+                      address: "123 LALALA"
+                    }
+                  }
+                });
+                toggleModal();
+              }}
+            > */
+}
