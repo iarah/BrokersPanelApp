@@ -53,6 +53,7 @@ const typeDefs = gql`
     createBroker(brokerInput: BrokerInput!): Broker
     createProperty(propertyInput: PropertyInput!): Property
     modifyProperty(propertyFields: PropertyEdit!): Property
+    deleteProperty(propertyID: Int!): [Property]
   }
 `;
 
@@ -88,7 +89,6 @@ const resolvers = {
       return newProperty;
     },
     modifyProperty: (parent, { propertyFields }) => {
-      console.log("HOLA");
       let existingProp = RealEstateStore.properties.find(
         prop => prop.id === propertyFields.id
       );
@@ -99,6 +99,10 @@ const resolvers = {
       }
       RealEstateStore.replaceProperty(propertyFields);
       return existingProp;
+    },
+    deleteProperty: (parent, { propertyID }) => {
+      RealEstateStore.deleteProperty(propertyID);
+      return RealEstateStore.properties;
     }
   }
 };
