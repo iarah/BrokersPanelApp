@@ -7,8 +7,6 @@ import { useToggle } from "@oneloop/hooks";
 
 import { ADD_BROKER } from "../graphql/mutations";
 import { GET_BROKERS } from "../graphql/queries";
-import { ModalSuccess } from "../components/modal-success";
-import { ApolloError } from "apollo-boost";
 
 export const AddBroker: React.FC = props => {
   const [openModal, toggleModal] = useToggle(false);
