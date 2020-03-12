@@ -112,6 +112,7 @@ const resolvers = {
       return RealEstateStore.properties;
     },
     editBroker: (parent, { brokerFields }) => {
+      console.log(brokerFields);
       const existingBroker = RealEstateStore.brokers.find(
         broker => broker.id === brokerFields.id
       );
@@ -120,10 +121,14 @@ const resolvers = {
           invalidArgs: { brokerFields }
         });
       } else {
-        if (!brokerFields.name && !brokerFields.address) {
+        if (brokerFields.name === "" && brokerFields.address === "") {
           return existingBroker;
         }
-
+        // const newBroker = {
+        //   id: existingBroker.id,
+        //   name: brokerFields.name === "" ? null : brokerFields.name,
+        //   address: brokerFields.address === "" ? null : brokerFields.address
+        // };
         return RealEstateStore.replaceBroker(brokerFields);
       }
     }
