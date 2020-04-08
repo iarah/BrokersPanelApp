@@ -17,7 +17,6 @@ export const AddProperty: React.FC = () => {
 
   const [addProperty] = useMutation(ADD_PROPERTY);
   const { data: brokersGet, loading, error } = useQuery(GET_BROKERS);
-
   console.log(brokerId);
 
   return (
@@ -32,13 +31,14 @@ export const AddProperty: React.FC = () => {
         )}
       </select>
       <Input
+        id="address-input"
         placeholder={address}
         onChange={(event: any) => setAddress(event.target.value)}
         sx={{ marginTop: "10px" }}
       />
       <Collapsible
         width={1 / 3}
-        isOpen={!extraFieldsOpen}
+        isOpen={extraFieldsOpen}
         sx={{ marginBottom: "20px" }}
       >
         <Collapsible.Button
@@ -47,7 +47,7 @@ export const AddProperty: React.FC = () => {
         >
           Campos opcionales
         </Collapsible.Button>
-        <Collapsible.Body>lalala</Collapsible.Body>
+        <Collapsible.Body> ... </Collapsible.Body>
       </Collapsible>
       <Button
         onClick={(e: any) => {
@@ -82,6 +82,13 @@ export const AddProperty: React.FC = () => {
                 }
               }
             });
+            const addInput = document.getElementById(
+              "address-input"
+            ) as HTMLTextAreaElement;
+            if (addInput) {
+              addInput.value = "";
+              addInput.placeholder = "Dirección";
+            }
           }
         }}
       >

@@ -9,14 +9,14 @@ import { EDIT_BROKER } from "../graphql/mutations";
 
 export const BrokersList: React.FC = () => {
   const { data } = useQuery(GET_BROKERS);
-  const [editBroker] = useMutation(EDIT_BROKER);
+  // const [editBroker] = useMutation(EDIT_BROKER);
   const [openId, setOpen] = React.useState(-1);
   const [selectedBroker, setSelectedBroker] = React.useState();
-  const [newAddress, setNewAddress] = React.useState();
-  const [newName, setNewName] = React.useState();
-  let editedName = "";
-  let editedAddress = "";
-  const [modalOpen, toggleModal] = useToggle(false);
+  // const [newAddress, setNewAddress] = React.useState();
+  // const [newName, setNewName] = React.useState();
+  // let editedName = "";
+  // let editedAddress = "";
+  // const [modalOpen, toggleModal] = useToggle(false);
 
   return (
     <>
@@ -37,7 +37,7 @@ export const BrokersList: React.FC = () => {
               <br />
               ADDRESS: {broker.address}
               <br />
-              <Button
+              {/* <Button
                 onClick={() => {
                   setSelectedBroker(broker);
                   toggleModal();
@@ -45,12 +45,12 @@ export const BrokersList: React.FC = () => {
               >
                 {" "}
                 Editar{" "}
-              </Button>
+              </Button> */}
             </Collapsible.Body>
           </Collapsible>
         ))}
       </Box>
-      {modalOpen && (
+      {/* {modalOpen && (
         <Modal>
           <Modal.Header>
             <Text>EDITAR BROKER</Text>
@@ -123,7 +123,7 @@ export const BrokersList: React.FC = () => {
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
+      )} */}
     </>
   );
 };
